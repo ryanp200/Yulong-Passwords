@@ -1,18 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Arimo:ital,wght@0,400..700;1,400..700&display=swap');
-
 *{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
-
-html, body {
+html, body{
     width: 100%;
     min-height: 100dvh;
     overflow-x: hidden;
 }
-
-body {
+body{
     font-family: 'Arimo', sans-serif;
     color: #ffffff;
     background: linear-gradient(135deg, #0f271f, #0a664f);
@@ -20,133 +17,133 @@ body {
     display: flex;
     flex-direction: column;
 }
-
-nav {
+nav{
     display: flex;
     justify-content: space-between;
     align-items: center;
     gap: 2rem;
-    padding: 1rem 2.5rem;
+    padding: 1.2rem 3rem;
     margin: 2rem auto;
     width: calc(100% - 4rem);
     max-width: 1200px;
-    border-radius: 16px;
-    background: linear-gradient(135deg, rgba(12, 43, 32, 0.7), rgba(10, 102, 79, 0.7));
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+    background: rgba(12, 43, 32, 0.6);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
 }
-
-nav img {
-    height: 40px;
+nav img{
+    height: 32px;
     width: auto;
     object-fit: contain;
 }
-
-nav ol {
+nav ol{
     display: flex;
     justify-content: center;
     align-items: center;
     list-style: none;
-    gap: 1.5rem;
+    gap: 2rem;
 }
-
-nav a {
-    color: rgba(255, 255, 255, 0.7);
+nav a{
+    color: rgba(255, 255, 255, 0.65);
     text-decoration: none;
     font-weight: 500;
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+    position: relative;
+    padding: 0.5rem 0;
     transition: color 0.3s ease;
 }
-
-nav a:hover {
+nav a::after{
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: #137751;
+    transition: width 0.3s ease;
+}
+nav a:hover{
     color: #ffffff;
 }
-
-.texto-grande {
+nav a:hover::after{
+    width: 100%;
+}
+.texto-grande{
     font-weight: 700;
     font-size: clamp(2rem, 5vw, 3.5rem);
     line-height: 1.2;
 }
-
-.texto-medio {
+.texto-medio{
     font-size: clamp(1.5rem, 4vw, 2.5rem);
     font-weight: 600;
 }
-
-.texto-sombra {
+.texto-sombra{
     text-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
 }
-
-#login {
+#login{
     flex: 1;
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 2rem;
 }
-
-.caixa-login {
+.caixa-login{
     background: rgba(4, 59, 36, 0.4);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     padding: 3rem 2.5rem;
-    border-radius: 24px;
+    border-radius: 4px;
     width: 100%;
     max-width: 440px;
     border: 1px solid rgba(255, 255, 255, 0.1);
     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
 }
-
-.caixa-login h2 {
+.caixa-login h2{
     margin-bottom: 2rem;
     font-size: 2rem;
     font-weight: 700;
     text-align: center;
     letter-spacing: -0.5px;
 }
-
-.container-entrada {
+.container-entrada{
     margin-bottom: 1.5rem;
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
 }
-
-.container-entrada label {
+.container-entrada label{
     font-size: 0.75rem;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 1.5px;
     color: rgba(255, 255, 255, 0.7);
 }
-
-.container-entrada input {
+.container-entrada input{
     padding: 1rem;
     background: rgba(255, 255, 255, 0.06);
     border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
+    border-radius: 4px;
     font-size: 1rem;
     color: #ffffff;
     outline: none;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
-
-.container-entrada input:focus {
+.container-entrada input:focus{
     border-color: rgba(255, 255, 255, 0.4);
     background: rgba(255, 255, 255, 0.12);
     box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.05);
 }
-
-.acoes-formulario {
+.acoes-formulario{
     display: flex;
     justify-content: space-between;
     align-items: center;
     font-size: 0.875rem;
     margin-bottom: 2rem;
 }
-
-.etiqueta-selecao {
+.etiqueta-selecao{
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -154,64 +151,54 @@ nav a:hover {
     cursor: pointer;
     transition: color 0.2s ease;
 }
-
-.etiqueta-selecao:hover {
+.etiqueta-selecao:hover{
     color: #ffffff;
 }
-
-.etiqueta-selecao input[type="checkbox"] {
+.etiqueta-selecao input[type="checkbox"]{
     accent-color: #137751;
     cursor: pointer;
 }
-
-.link-esqueci {
+.link-esqueci{
     color: rgba(255, 255, 255, 0.7);
     text-decoration: none;
     transition: color 0.2s ease;
 }
-
-.link-esqueci:hover {
+.link-esqueci:hover{
     color: #ffffff;
     text-decoration: underline;
 }
-
-.botao-enviar {
+.botao-enviar{
     width: 100%;
     padding: 1rem;
     background-color: #137751;
     color: white;
     border: none;
-    border-radius: 12px;
+    border-radius: 4px;
     font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s ease;
     box-shadow: 0 4px 12px rgba(19, 119, 81, 0.3);
 }
-
-.botao-enviar:hover {
+.botao-enviar:hover{
     background-color: #0c5338;
     transform: translateY(-1px);
     box-shadow: 0 6px 20px rgba(10, 102, 79, 0.4);
 }
-
-.botao-enviar:active {
+.botao-enviar:active{
     transform: translateY(1px);
 }
-
-.dica-cadastro {
+.dica-cadastro{
     text-align: center;
     margin-top: 2rem;
     font-size: 0.875rem;
     color: rgba(255, 255, 255, 0.7);
 }
-
-.dica-cadastro a {
+.dica-cadastro a{
     color: #ffffff;
     text-decoration: none;
     font-weight: 600;
 }
-
-.dica-cadastro a:hover {
+.dica-cadastro a:hover{
     text-decoration: underline;
 }

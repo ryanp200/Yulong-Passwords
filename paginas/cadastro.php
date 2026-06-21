@@ -1,3 +1,11 @@
+<?php
+    session_start();
+    $usuario_logado = isset($_SESSION['usuario']);
+    if($usuario_logado){
+        header('Location: ../index.php');
+    };
+?>
+
 <!DOCTYPE html>
 <html lang="pt">
     <head>
@@ -6,50 +14,50 @@
         <title>Yulong - Cadastro</title>
         <link rel="stylesheet" href="../css/geral.css">
         <style>
-    #login{
-        padding: 1rem;
-    }
-    .caixa-login{
-        padding: 1.5rem 2rem;
-        max-width: 500px;
-        width: 100%;
-    }
-    .caixa-login h2{
-        margin-bottom: 1rem;
-    }
-    .grid-campos{
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 1rem;
-    }
-    .col-total{
-        grid-column: span 2;
-    }
-    .container-entrada{
-        margin-bottom: 0.75rem;
-        display: flex;
-        flex-direction: column;
-    }
-    .container-entrada input{
-        padding: 0.75rem;
-        width: 100%;
-    }
-    .container-entrada input[type="date"]::-webkit-calendar-picker-indicator {
-        display: none;
-        -webkit-appearance: none;
-    }
-    .dica-cadastro{
-        margin-top: 1rem;
-    }
-    @media (max-width: 480px) {
-        .grid-campos {
-            grid-template-columns: 1fr;
-        }
-        .grid-campos > section {
-            grid-column: span 1 !important;
-        }
-    }
-</style>
+            #login{
+                padding: 1rem;
+            }
+            .caixa-login{
+                padding: 1.5rem 2rem;
+                max-width: 500px;
+                width: 100%;
+            }
+            .caixa-login h2{
+                margin-bottom: 1rem;
+            }
+            .grid-campos{
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 1rem;
+            }
+            .col-total{
+                grid-column: span 2;
+            }
+            .container-entrada{
+                margin-bottom: 0.75rem;
+                display: flex;
+                flex-direction: column;
+            }
+            .container-entrada input{
+                padding: 0.75rem;
+                width: 100%;
+            }
+            .container-entrada input[type="date"]::-webkit-calendar-picker-indicator {
+                display: none;
+                -webkit-appearance: none;
+            }
+            .dica-cadastro{
+                margin-top: 1rem;
+            }
+            @media (max-width: 480px) {
+                .grid-campos {
+                    grid-template-columns: 1fr;
+                }
+                .grid-campos > section {
+                    grid-column: span 1 !important;
+                }
+            }
+        </style>
     </head>
     <body>
         <nav>
@@ -88,12 +96,12 @@
 
                         <section class="container-entrada">
                             <label for="senha">Senha</label>
-                            <input type="password" id="senha" name="senha" placeholder="Crie uma senha" required autocomplete="new-password">
+                            <input type="password" id="senha" name="senha" placeholder="Crie uma senha" required>
                         </section>
 
                         <section class="container-entrada">
                             <label for="confirma-senha">Confirmar</label>
-                            <input type="password" id="confirma-senha" name="confirm_password" placeholder="Repita a senha" required autocomplete="new-password">
+                            <input type="password" id="confirma-senha" name="confirma_senha" placeholder="Repita a senha" required>
                         </section>
                     </section>
                     <button type="submit" class="botao-enviar" style="margin-top: 1rem;">Cadastrar</button>
@@ -118,50 +126,42 @@
         </script>
 
         <?php
-        require_once 'conexao.php';
+            require_once 'conexao.php';
 
-        if ($conexao->connect_error) {
-            die("Falha na conexão com o banco de dados: " . $conexao->connect_error);
-        }
+            //pra processar os dados, parece melhor que o isset['enviar']
+            if($_SERVER["REQUEST_METHOD"] == "POST"){
+                $nome = trim($_POST['nome']);
+                $data_nasc = trim($_POST['data_nasc']);
+                $username = trim($_POST['username']);
+                $email = trim($_POST['email']);
+                $senha = $_POST['senha'];
+                $confirma_snh = $_POST['confirma_senha'];
 
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            $nome = trim($_POST['nome']);
-            $data_nasc = trim($_POST['data_nasc']);
-            $username = trim($_POST['username']);
-            $email = trim($_POST['email']);
-            $senha = $_POST['senha'];
-            $confirma_snh = $_POST['confirm_password'];
-
-            if (empty($nome) || empty($data_nasc) || empty($username) || empty($email) || empty($senha)) {
-                die("Por favor, preencha todos os campos obrigatórios.");
-            }
-
-            if ($senha !== $confirma_snh) {
-                die("Erro: As senhas digitadas não coincidem.");
-            }
-
-            $senha_criptografada = password_hash($senha, PASSWORD_DEFAULT);
-
-            $sql = "INSERT INTO usuario (nome, data_nasc, email, senha, username) VALUES (?, ?, ?, ?, ?)";
-
-            $stmt = $conexao->prepare($sql);
-
-            if ($stmt) {
-                $stmt->bind_param("sssss", $nome, $data_nasc, $email, $senha_criptografada, $username);
-
-                if ($stmt->execute()) {
-                    echo "<script>\n                    alert('Cadastro realizado com sucesso!');\n                    window.location.href = 'login.php';\n                  </script>";
-                } else {
-                    echo "Erro ao cadastrar usuário: " . $stmt->error;
+                if(empty($nome)||empty($data_nasc)||empty($username)||empty($email)||empty($senha)){
+                    die("Por favor, preencha todos os campos obrigatórios.");
                 }
 
-                $stmt->close();
-            } else {
-                echo "Erro na preparação do banco de dados: " . $conexao->error;
+                if($senha !== $confirma_snh) {
+                    die("Erro: As senhas digitadas não coincidem.");
+                }
+                // mistura a senha com o nome no senha cript, já serve pro banco dps da pra usar password_verify
+                $senha_criptografada = password_hash($senha.$email, PASSWORD_DEFAULT);
+                //escape serve pra evitar injection, escapa caracteres que podem quebrar o codigo -> mais segurança
+                $nome_esc = $conexao->real_escape_string($nome);
+                $data_nasc_esc = $conexao->real_escape_string($data_nasc);
+                $email_esc = $conexao->real_escape_string($email);
+                $username_esc = $conexao->real_escape_string($username);
+                $sql = "insert into usuario (nome, data_nasc, email, senha, username)values('{$nome_esc}', '{$data_nasc_esc}', '{$email_esc}', '{$senha_criptografada}', '{$username_esc}')";
+                if(mysqli_query($conexao,$sql)){
+                    echo "<script>
+                        alert('Cadastro realizado com sucesso!');
+                        window.location.href = 'login.php';
+                    </script>";
+                }else{
+                    echo "alert('Cadastro realizado com sucesso!');
+                        window.location.href = 'cadastro.php' ";
+                }
             }
-        }
-
-        $conexao->close();
         ?>
     </body>
 </html>

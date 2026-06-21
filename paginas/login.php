@@ -1,5 +1,10 @@
 <?php
-session_start();
+    session_start();
+    $usuario_logado = isset($_SESSION['usuario']);
+    if ($usuario_logado) {
+        header('Location: perfil.php');
+        exit();
+    }
 ?>
 <!DOCTYPE html>
 <html lang="pt">
@@ -11,15 +16,18 @@ session_start();
 </head>
 <body>
     <nav>
-        <img src="../imgs/logos/yulong_logo_simplified.png" alt="Yulong Logo">
+        <img src="../imgs/logos/yulong_logo_simplified.png" alt="Yulong Passwords">
         <ol>
             <li><a href="../index.php">Home</a></li>
             <li><a href="senhas.php">Senhas</a></li>
-            <li><a href="login.php" class="ativo">Login</a></li>
+            <?php if ($usuario_logado):?>
+                <li id="nav-deslogar"><a href="#">Deslogar</a></li>
+            <?php else:?>
+                <li><a href="login.php">Login</a></li>
+            <?php endif;?>  
             <li><a href="perfil.php">Perfil</a></li>
         </ol>
     </nav>
-
     <section id="login">
         <section class="caixa-login">
             <h2>Acessar Conta</h2>   
@@ -45,29 +53,33 @@ session_start();
                 </section>
             </form>
         </section>
-<?php
-require_once 'conexao.php';
+        <?php
+        require_once 'conexao.php';
 
-if (isset($_POST['login'])) {
-    $user = $_POST['user'];
-    $senha = $_POST['senha'];
-    $sql = "SELECT * FROM usuario WHERE username = '$user' OR email = '$user'";
-    $pesquisa = mysqli_query($conexao, $sql);
-    $resultado = mysqli_fetch_array($pesquisa);
+        if (isset($_POST['login'])) {
+            $user = $_POST['user'];
+            $senha = $_POST['senha'];
+            $sql = "select * from usuario where username = '$user' OR email = '$user'";
+            $pesquisa = mysqli_query($conexao, $sql);
+            $resultado = mysqli_fetch_array($pesquisa);
 
-    if ($resultado){
-        if (password_verify($senha, $resultado['senha'])) {
-            $_SESSION['usuario'] = $resultado['nome'];
-            header("Location: ../index.php");
-            exit();
-        }else {
-            echo "<script>alert('Senha incorreta. Tente novamente.');</script>";
+            if ($resultado){
+                $senha_pesquisa = $senha.$resultado['email'];
+                if (password_verify($senha_pesquisa, $resultado['senha'])) {
+                    $_SESSION['id_user'] = $resultado['id_user'];
+                    $_SESSION['usuario'] = $resultado['nome'];
+                    header("Location: ../index.php");
+                    exit();
+                }else{
+                    echo "<script>alert('Senha incorreta. Tente novamente.');
+                    window.location.href='login.php'</script>";
+                }
+            }else{
+                echo "<script>alert('Usuário ou email não encontrado. Tente novamente.');</script>";
+            }
         }
-    } else {
-        echo "<script>alert('Usuário ou email não encontrado. Tente novamente.');</script>";
-    }
-}
-?>
+        ?>
     </section>
+    <script src="components/deslogar.js"></script>
 </body>
 </html>
