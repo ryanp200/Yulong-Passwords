@@ -16,6 +16,14 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Current Database: `yulongpasswords`
+--
+
+CREATE DATABASE /*!32312 IF NOT EXISTS*/ `yulongpasswords` /*!40100 DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci */;
+
+USE `yulongpasswords`;
+
+--
 -- Table structure for table `senhas`
 --
 
@@ -30,7 +38,7 @@ CREATE TABLE `senhas` (
   PRIMARY KEY (`id_senhas`),
   KEY `id_user` (`id_user`),
   CONSTRAINT `senhas_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `usuario` (`id_user`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -39,6 +47,7 @@ CREATE TABLE `senhas` (
 
 LOCK TABLES `senhas` WRITE;
 /*!40000 ALTER TABLE `senhas` DISABLE KEYS */;
+INSERT INTO `senhas` VALUES (6,'Netflix','Woshihanguoren',2),(7,'Xuesheng','iskcr',1),(8,'ForIMiss','Ineed',1),(9,'KakaoTalk','ye-jin1900',2),(10,'Starbucks','gwangjuisnotajoke',2),(11,'Celular do Samuel','_samuel>>>s',3),(12,'Internet do Angelo','rocha1103',3),(13,'Email do Pedro','augustoamasamuel',3),(14,'Site Suspeito 1','pranchote',4),(15,'Site Suspeito 2','jaji wonhae',4),(16,'Termo','querojaji',4);
 /*!40000 ALTER TABLE `senhas` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -57,7 +66,7 @@ CREATE TABLE `usuario` (
   `senha` varchar(100) DEFAULT NULL,
   `username` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id_user`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -66,7 +75,7 @@ CREATE TABLE `usuario` (
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` VALUES (1,'Yasmim Cdoce','2009-06-06','yasmimdonadosamuel@gmail.com','$2y$10$4hUcNWT2H1cvxtydXT5/o.iECQ.SZaxFmUl0E50j1AjnTJ2w71cgq','ysc49'),(2,'Samuel do Sol','1981-05-07','samueldayasmim@gmail.com','$2y$10$I7ooQrbmv37lHRxBovvVUe3L1hesxtrKcGY3c3KYANzBA5Bo9J9oO','sm3');
+INSERT INTO `usuario` VALUES (1,'Ryan Aparecido Peres','2008-01-12','ryan.peres2311@gmail.com','$2y$10$yA4AM1j/c4xHSdkzyXfTu.xQzhDcVYxmmkfnen3fJGZrVtF6zUpPa','rp2008'),(2,'Ye-jin Jo','2000-11-04','joye.jin2@kcna.kp','$2y$10$l4Il7zEF6L3bp.1JHK1A9.ui6bpBTrpnNlOPbHGQYCrEH0uTWeQkK','jyj'),(3,'Yasmim Camargo','2008-11-11','yasmimdesandra@gmail.com','$2y$10$Z/KGWAuZwsfNu3ZBSihnWOOD9nxZ4F44tf8mBEo1OgFk3YvBUDTrW','ysc'),(4,'Matheus Barboza Prancha','2008-09-12','matheus7prancha@gmail.com','$2y$10$BT9mzyZic.gLyQwg6S4V6eJ.9H4FiO10IRzwCjGBUXQy9AD84CnjK','prancha');
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -79,4 +88,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-06-15 15:23:45
+-- Dump completed on 2026-06-21 17:22:09
