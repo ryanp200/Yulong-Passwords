@@ -7,8 +7,7 @@
         $usuario = explode(' ',$usuario_completo);
     }
     require_once 'conexao.php';
-
-    if (isset($_POST['salvar_senha'])){
+    if(isset($_POST['salvar_senha'])){
         $nome_servico = $_POST['nome_servico'];
         $senha_inserida = $_POST['senha_servico'];
         $sql_inserir = "insert into senhas(nome, senha, id_user)values('$nome_servico', '$senha_inserida', '$id_user')";
@@ -17,8 +16,7 @@
             exit;
         }
     }
-
-    if (isset($_POST['editar_senha'])){
+    if(isset($_POST['editar_senha'])){
         $id_senha = $_POST['id_senha'];
         $nome_servico = $_POST['nome_servico'];
         $senha_inserida = $_POST['senha_servico'];
@@ -28,8 +26,7 @@
             exit;
         }
     }
-
-    if (isset($_POST['deletar_senha'])){
+    if(isset($_POST['deletar_senha'])){
         $id_senha = $_POST['id_senha'];
         $sql_deletar = "delete from senhas where id_senhas = '$id_senha' and id_user = '$id_user'";
         if(mysqli_query($conexao, $sql_deletar)){
@@ -106,25 +103,25 @@
             border-top-right-radius: 6px;
             border-bottom-right-radius: 6px;
         }
-        .th-servico {
+        .th-servico{
             width: 40%;
         }
-        .th-senha {
+        .th-senha{
             width: 40%;
         }
-        .th-acoes {
+        .th-acoes{
             width: 20%;
             text-align: right;
             padding-right: 1rem;
         }
-        .wrapper-senha {
+        .wrapper-senha{
             display: flex;
             align-items: center;
             gap: 10px;
             justify-content: space-between;
             max-width: 90%;
         }
-        .coluna-senha {
+        .coluna-senha{
             color: rgba(255, 255, 255, 0.8);
             font-family: monospace;
             font-size: 1.1rem;
@@ -134,7 +131,7 @@
             text-overflow: ellipsis;
             flex-grow: 1;
         }
-        .btn-ver-senha {
+        .btn-ver-senha{
             background: rgba(255, 255, 255, 0.1);
             border: 1px solid rgba(255, 255, 255, 0.15);
             color: #fff;
@@ -147,16 +144,16 @@
             min-width: 70px;
             text-align: center;
         }
-        .btn-ver-senha:hover {
+        .btn-ver-senha:hover{
             background: rgba(255, 255, 255, 0.2);
         }
-        .coluna-acoes {
+        .coluna-acoes{
             display: flex;
             gap: 0.5rem;
             justify-content: flex-end;
             align-items: center;
         }
-        .btn-acao {
+        .btn-acao{
             padding: 0.5rem 1rem;
             border-radius: 6px;
             font-size: 0.875rem;
@@ -165,20 +162,20 @@
             border: none;
             transition: all 0.2s ease;
         }
-        .btn-editar {
+        .btn-editar{
             background-color: rgba(255, 255, 255, 0.1);
             color: white;
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
-        .btn-editar:hover {
+        .btn-editar:hover{
             background-color: rgba(255, 255, 255, 0.2);
         }
-        .btn-deletar {
+        .btn-deletar{
             background-color: #771326;
             color: white;
             box-shadow: 0 4px 12px rgba(119, 19, 38, 0.3);
         }
-        .btn-deletar:hover {
+        .btn-deletar:hover{
             background-color: #530c17;
         }
         dialog {

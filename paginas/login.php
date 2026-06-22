@@ -57,8 +57,9 @@
         require_once 'conexao.php';
 
         if (isset($_POST['login'])) {
-            $user = $_POST['user'];
+            $user = mysqli_real_escape_string($conexao, $_POST['user']);
             $senha = $_POST['senha'];
+            
             $sql = "select * from usuario where username = '$user' OR email = '$user'";
             $pesquisa = mysqli_query($conexao, $sql);
             $resultado = mysqli_fetch_array($pesquisa);
@@ -68,6 +69,14 @@
                 if (password_verify($senha_pesquisa, $resultado['senha'])) {
                     $_SESSION['id_user'] = $resultado['id_user'];
                     $_SESSION['usuario'] = $resultado['nome'];
+                    
+                    // Verifica e define o privilégio do usuário logado na sessão
+                    if (isset($resultado['privilegio']) && $resultado['privilegio'] === 'admin') {
+                        $_SESSION['privilegio'] = 'admin';
+                    } else {
+                        $_SESSION['privilegio'] = 'user';
+                    }
+
                     header("Location: ../index.php");
                     exit();
                 }else{
